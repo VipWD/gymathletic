@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYM ATHLETIC | Fuerza, Energía y Resultados</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#E50914',
+                            redDark: '#B80710',
+                            redGlow: 'rgba(229, 9, 20, 0.4)',
+                            darkBg: '#0B0C10',
+                            cardBg: '#12141C',
+                            cardBorder: '#2A2E3D'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        display: ['Bebas Neue', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0B0C10;
+            color: #E2E8F0;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Entrance Zoom Anim */
+        @keyframes heroZoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(40px);
+                filter: blur(10px);
+            }
+            70% {
+                opacity: 0.9;
+                transform: scale(1.05) translateY(-5px);
+                filter: blur(0px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        .animate-hero-zoom {
+            animation: heroZoomIn 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Red Glow Effects */
+        .text-glow-red {
+            text-shadow: 0 0 20px rgba(229, 9, 20, 0.7), 0 0 40px rgba(229, 9, 20, 0.3);
+        }
+
+        .box-glow-red {
+            box-shadow: 0 0 25px rgba(229, 9, 20, 0.25);
+        }
+
+        .box-glow-hover:hover {
+            box-shadow: 0 0 35px rgba(229, 9, 20, 0.5);
+            border-color: #E50914;
+        }
+
+        .bg-red-gradient {
+            background: linear-gradient(135deg, #E50914 0%, #B80710 100%);
+        }
+
+        /* Scroll Reveal Effect */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-200">
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-brand-darkBg/90 backdrop-blur-md border-b border-brand-cardBorder/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#inicio" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 bg-red-gradient rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform shadow-lg shadow-brand-red/30">
+                        <i class="fa-solid fa-dumbbell text-white text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-display text-3xl tracking-wider text-white leading-none">
+                            GYM <span class="text-brand-red">ATHLETIC</span>
+                        </span>
+                        <span class="text-[9px] tracking-widest text-gray-400 font-bold uppercase mt-0.5">Toluca • Edo. de México</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Menu -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#inicio" class="text-sm font-semibold hover:text-brand-red transition-colors">Inicio</a>
+                    <a href="#instalaciones" class="text-sm font-semibold hover:text-brand-red transition-colors">Equipamiento</a>
+                    <a href="#precios" class="text-sm font-semibold hover:text-brand-red transition-colors">Precios</a>
+                    <a href="#horarios" class="text-sm font-semibold hover:text-brand-red transition-colors">Horarios</a>
+                    <a href="#imc" class="text-sm font-semibold hover:text-brand-red transition-colors">Calculadora IMC</a>
+                    <a href="#ubicacion" class="text-sm font-semibold hover:text-brand-red transition-colors">Ubicación</a>
+                </nav>
+
+                <!-- CTA Button -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#contacto" class="bg-red-gradient text-white font-bold px-6 py-2.5 rounded-xl text-sm hover:brightness-110 transition-all shadow-md shadow-brand-red/30 hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-bolt mr-2"></i>¡Únete Hoy!
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-darkBg/98 border-b border-brand-cardBorder px-4 pt-2 pb-6 space-y-3">
+            <a href="#inicio" class="block py-2 text-base font-semibold hover:text-brand-red">Inicio</a>
+            <a href="#instalaciones" class="block py-2 text-base font-semibold hover:text-brand-red">Equipamiento</a>
+            <a href="#precios" class="block py-2 text-base font-semibold hover:text-brand-red">Precios y Membresías</a>
+            <a href="#horarios" class="block py-2 text-base font-semibold hover:text-brand-red">Horarios</a>
+            <a href="#imc" class="block py-2 text-base font-semibold hover:text-brand-red">Calculadora IMC</a>
+            <a href="#ubicacion" class="block py-2 text-base font-semibold hover:text-brand-red">Ubicación y Contacto</a>
+            <a href="#contacto" class="block text-center bg-red-gradient text-white font-bold py-3 rounded-xl mt-4">
+                ¡Únete Hoy!
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Background Decorative Overlay with Image Placeholder -->
+        <div class="absolute inset-0 z-0 bg-brand-darkBg flex items-center justify-center">
+            <!-- Container for custom image background -->
+            <div class="w-full h-full relative flex items-center justify-center border-b border-brand-cardBorder/40 overflow-hidden group">
+                <img src="imagenes/logo.jpg.jpeg">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-brand-darkBg/85 to-brand-darkBg/95 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(229,9,20,0.18)_0%,transparent_70%)] pointer-events-none"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center py-20">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-cardBg border border-brand-red/40 text-brand-red text-xs sm:text-sm font-bold uppercase tracking-widest mb-8 box-glow-red">
+                <i class="fa-solid fa-fire text-xs"></i> Tu Mejor Versión Comienza Aquí • Toluca
+            </div>
+
+            <!-- Título Principal con Animación Zoom-In -->
+            <h1 class="animate-hero-zoom font-display text-6xl sm:text-8xl md:text-9xl tracking-wider text-white uppercase mb-4 leading-none">
+                GYM <span class="text-transparent bg-clip-text bg-red-gradient text-glow-red">ATHLETIC</span>
+            </h1>
+
+            <!-- Slogan -->
+            <p class="text-lg sm:text-2xl text-gray-300 font-light max-w-3xl mx-auto mb-10 leading-relaxed">
+                Fuerza, disciplina y resultados reales. Contamos con equipamiento completo, ambiente enfocado e instalaciones de primera en Toluca.
+            </p>
+
+            <!-- Acciones CTA -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+                <a href="#precios" class="w-full sm:w-auto bg-red-gradient text-white font-extrabold text-base px-8 py-4 rounded-xl hover:brightness-110 transition-all shadow-lg shadow-brand-red/30 flex items-center justify-center gap-2 hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-tag"></i> Ver Planes y Precios
+                </a>
+                <a href="#ubicacion" class="w-full sm:w-auto bg-brand-cardBg hover:bg-brand-cardBorder text-white border border-brand-cardBorder font-bold text-base px-8 py-4 rounded-xl transition-all flex items-center justify-center gap-2 hover:border-brand-red/50">
+                    <i class="fa-solid fa-location-dot text-brand-red"></i> Cómo Llegar
+                </a>
+            </div>
+
+            <!-- Stats Rápidos -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-10 border-t border-brand-cardBorder/50 text-left">
+                <div class="bg-brand-cardBg/60 border border-brand-cardBorder/50 p-4 rounded-2xl">
+                    <p class="text-3xl font-black text-brand-red font-display">$300/mes</p>
+                    <p class="text-xs text-gray-400 font-medium">Membresía Accesible</p>
+                </div>
+                <div class="bg-brand-cardBg/60 border border-brand-cardBorder/50 p-4 rounded-2xl">
+                    <p class="text-3xl font-black text-brand-red font-display">100%</p>
+                    <p class="text-xs text-gray-400 font-medium">Equipamiento Funcional</p>
+                </div>
+                <div class="bg-brand-cardBg/60 border border-brand-cardBorder/50 p-4 rounded-2xl">
+                    <p class="text-3xl font-black text-brand-red font-display">6:00 AM</p>
+                    <p class="text-xs text-gray-400 font-medium">Apertura Lunes a Viernes</p>
+                </div>
+                <div class="bg-brand-cardBg/60 border border-brand-cardBorder/50 p-4 rounded-2xl">
+                    <p class="text-3xl font-black text-brand-red font-display">Asesoría</p>
+                    <p class="text-xs text-gray-400 font-medium">Guía para tus Objetivos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERÍA DE EQUIPAMIENTO E INSTALACIONES -->
+    <section id="instalaciones" class="py-24 relative border-t border-brand-cardBorder/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+                <h2 class="text-brand-red font-bold text-sm uppercase tracking-widest mb-2">Equipamiento Garantizado</h2>
+                <p class="font-display text-4xl sm:text-6xl text-white mb-4">Contamos con todo el equipo que necesitas</p>
+                <div class="w-20 h-1 bg-red-gradient mx-auto rounded-full mt-2"></div>
+            </div>
+
+            <!-- Filtros de Galería -->
+            <div class="flex justify-center gap-2 sm:gap-4 mb-12 flex-wrap reveal">
+                <button onclick="filterGallery('all')" class="gallery-filter-btn px-5 py-2.5 rounded-xl font-bold text-sm border border-brand-red bg-brand-red text-white transition-all">
+                    Todos
+                </button>
+                <button onclick="filterGallery('libre')" class="gallery-filter-btn px-5 py-2.5 rounded-xl font-bold text-sm border border-brand-cardBorder bg-brand-cardBg text-gray-300 hover:border-brand-red transition-all">
+                    Peso Libre
+                </button>
+                <button onclick="filterGallery('maquinas')" class="gallery-filter-btn px-5 py-2.5 rounded-xl font-bold text-sm border border-brand-cardBorder bg-brand-cardBg text-gray-300 hover:border-brand-red transition-all">
+                    Peso Controlado
+                </button>
+                <button onclick="filterGallery('cardio')" class="gallery-filter-btn px-5 py-2.5 rounded-xl font-bold text-sm border border-brand-cardBorder bg-brand-cardBg text-gray-300 hover:border-brand-red transition-all">
+                    Área Cardio
+                </button>
+            </div>
+
+            <!-- Grid Galería con Placeholders (Sin tarjetas de bicicletas ni peso libre de barras olímpicas) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Item 1: Cardio (Caminadoras / Cintas de Correr) -->
+                <div class="gallery-item cardio group relative rounded-2xl overflow-hidden border border-brand-cardBorder bg-brand-cardBg reveal flex flex-col justify-between min-h-[320px]">
+                    <div class="relative w-full h-48 bg-black/50 border-b border-brand-cardBorder flex flex-col items-center justify-center p-4 text-center">
+                        <img src="imagenes/caminadoras.jpeg">
+                        <i class="fa-solid fa-person-walking-luggage text-3xl text-brand-red mb-2"></i>
+                       
+                    </div>
+                    <div class="p-5 flex flex-col justify-end">
+                        <span class="text-brand-red text-xs font-bold uppercase tracking-wider mb-1">Zona Cardio</span>
+                        <h3 class="text-white font-bold text-lg">Caminadoras Profesionales</h3>
+                        <p class="text-gray-400 text-xs mt-1">Equipo para quema de calorías, resistencia cardiovascular y calentamiento.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2: Peso Libre (Mancuernas) -->
+                <div class="gallery-item libre group relative rounded-2xl overflow-hidden border border-brand-cardBorder bg-brand-cardBg reveal flex flex-col justify-between min-h-[320px]">
+                    <div class="relative w-full h-48 bg-black/50 border-b border-brand-cardBorder flex flex-col items-center justify-center p-4 text-center">
+                        <img src="imagenes/pesolibre.jpeg">
+                        <i class="fa-solid fa-dumbbell text-3xl text-brand-red mb-2"></i>
+                       
+                    </div>
+                    <div class="p-5 flex flex-col justify-end">
+                        <span class="text-brand-red text-xs font-bold uppercase tracking-wider mb-1">Peso Libre</span>
+                        <h3 class="text-white font-bold text-lg">Set Completo de Mancuernas</h3>
+                        <p class="text-gray-400 text-xs mt-1">Amplia variedad de pesos para desarrollo e hipertrofia muscular.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3: Maquinas (Poleas y Guiados) -->
+                <div class="gallery-item maquinas group relative rounded-2xl overflow-hidden border border-brand-cardBorder bg-brand-cardBg reveal flex flex-col justify-between min-h-[320px]">
+                    <div class="relative w-full h-48 bg-black/50 border-b border-brand-cardBorder flex flex-col items-center justify-center p-4 text-center">
+                        <img src="imagenes/poleas.jpeg">
+                        <i class="fa-solid fa-gears text-3xl text-brand-red mb-2"></i>
+                        
+                    </div>
+                    <div class="p-5 flex flex-col justify-end">
+                        <span class="text-brand-red text-xs font-bold uppercase tracking-wider mb-1">Peso Controlado</span>
+                        <h3 class="text-white font-bold text-lg">Prensa & Torres de Poleas Multi-estación</h3>
+                        <p class="text-gray-400 text-xs mt-1">Sistemas con cables y biomecánica ajustada para aislamiento muscular.</p>
+                    </div>
+                </div>
+
+                <!-- Item 4: Maquinas (Extensión de Piernas) -->
+                <div class="gallery-item maquinas group relative rounded-2xl overflow-hidden border border-brand-cardBorder bg-brand-cardBg reveal flex flex-col justify-between min-h-[320px]">
+                    <div class="relative w-full h-48 bg-black/50 border-b border-brand-cardBorder flex flex-col items-center justify-center p-4 text-center">
+                        <img src="imagenes/extensiones.jpeg">
+                        <i class="fa-solid fa-cubes-stacked text-3xl text-brand-red mb-2"></i>
+                        
+                    </div>
+                    <div class="p-5 flex flex-col justify-end">
+                        <span class="text-brand-red text-xs font-bold uppercase tracking-wider mb-1">Peso Controlado</span>
+                        <h3 class="text-white font-bold text-lg">Máquinas Específicas de Extremidades</h3>
+                        <p class="text-gray-400 text-xs mt-1">Extensiones de cuádriceps, femorales tumbado y jalones dorsales.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PRECIOS Y MEMBRESÍAS -->
+    <section id="precios" class="py-24 bg-brand-darkBg relative border-y border-brand-cardBorder/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-brand-red font-bold text-sm uppercase tracking-widest mb-2">Inversión Transparente</h2>
+                <p class="font-display text-4xl sm:text-6xl text-white mb-4">Planes y Membresías</p>
+                <p class="text-gray-400 text-sm sm:text-base">Precios accesibles para entrenar con total constancia y sin plazos forzosos innecesarios.</p>
+            </div>
+
+            <!-- Tarjetas de Precios -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                <!-- Visita Diaria -->
+                <div class="bg-brand-cardBg rounded-3xl p-8 border border-brand-cardBorder flex flex-col justify-between box-glow-hover transition-all reveal">
+                    <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Para Probar</span>
+                        <h3 class="text-2xl font-bold text-white mt-1 mb-4">Visita del Día</h3>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-5xl font-black text-white font-display">$50</span>
+                            <span class="text-gray-400 text-sm">MXN / día</span>
+                        </div>
+                        <ul class="space-y-4 text-sm text-gray-300 mb-8">
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Acceso total durante el día
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Uso de maquinaria libre y guiada
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Acceso a zona de cardio completa
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Orientación inicial en gimnasio
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#contacto" class="block text-center w-full py-3.5 rounded-xl border border-brand-red text-brand-red font-bold hover:bg-brand-red hover:text-white transition-all">
+                        Pagar en Recepción
+                    </a>
+                </div>
+
+                <!-- Mensualidad Individual -->
+                <div class="bg-brand-cardBg rounded-3xl p-8 border border-brand-cardBorder flex flex-col justify-between box-glow-hover transition-all reveal">
+                    <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Suscripción Mensual</span>
+                        <h3 class="text-2xl font-bold text-white mt-1 mb-4">Plan Mensual</h3>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-5xl font-black text-white font-display">$300</span>
+                            <span class="text-gray-400 text-sm">MXN / mes</span>
+                        </div>
+                        <ul class="space-y-4 text-sm text-gray-300 mb-8">
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Acceso ilimitado durante 30 días
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Asesoría constante de instructores
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Sin inscripciones forzosas
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Lockers diarios y vestidores
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#contacto" class="block text-center w-full py-3.5 rounded-xl border border-brand-red text-brand-red font-bold hover:bg-brand-red hover:text-white transition-all">
+                        Inscribirme por Mes
+                    </a>
+                </div>
+
+                <!-- Membresía Anual (Estética limpia y uniforme) -->
+                <div class="bg-brand-cardBg rounded-3xl p-8 border border-brand-cardBorder flex flex-col justify-between box-glow-hover transition-all reveal">
+                    <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Membresía Anual</span>
+                        <h3 class="text-2xl font-bold text-white mt-1 mb-4">Plan Anual</h3>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-5xl font-black text-white font-display">$2,800</span>
+                            <span class="text-gray-400 text-sm">MXN / año</span>
+                        </div>
+                        <ul class="space-y-4 text-sm text-gray-300 mb-8">
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> 12 Meses completos de acceso ilimitado
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Garantía de congelación de tarifa
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Evaluación física inicial sin costo
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Prioridad en locker y vestidor
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-brand-red"></i> Asesoría personalizada permanente
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#contacto" class="block text-center w-full py-3.5 rounded-xl border border-brand-red text-brand-red font-bold hover:bg-brand-red hover:text-white transition-all">
+                        Inscribirme por Año
+                    </a>
+                </div>
+            </div>
+
+            <!-- Calculadora de Meses e Inversión -->
+            <div class="mt-16 bg-brand-cardBg border border-brand-cardBorder rounded-3xl p-6 sm:p-10 max-w-3xl mx-auto box-glow-red reveal">
+                <h3 class="text-2xl font-bold text-white mb-2 text-center font-display tracking-wide">Calculadora de Ahorro y Planificación</h3>
+                <p class="text-gray-400 text-xs sm:text-sm text-center mb-6">Selecciona el número de meses que planeas entrenar para calcular tu inversión diaria aproximada.</p>
+                
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm font-semibold mb-2">
+                            <span>Meses a proyectar:</span>
+                            <span id="months-label" class="text-brand-red font-bold text-base">3 Meses</span>
+                        </div>
+                        <input type="range" id="months-slider" min="1" max="12" value="3" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-red">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 bg-black/60 p-5 rounded-2xl border border-brand-cardBorder text-center">
+                        <div>
+                            <p class="text-xs text-gray-400">Total Proyectado:</p>
+                            <p id="total-price" class="text-3xl font-black text-brand-red font-display">$900 MXN</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400">Inversión Diaria Promedio:</p>
+                            <p id="daily-price" class="text-3xl font-black text-white font-display">$10 MXN/día</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HORARIOS ACCESIBLES -->
+    <section id="horarios" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-brand-red font-bold text-sm uppercase tracking-widest mb-2">Disponibilidad Flexible</h2>
+                <p class="font-display text-4xl sm:text-6xl text-white mb-4">Horarios de Entrenamientos</p>
+                <p class="text-gray-400 text-sm">Organiza tu día libremente. Abrimos desde temprana hora para que nunca pierdas tu rutina.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Lunes a Viernes -->
+                <div class="bg-brand-cardBg border border-brand-cardBorder rounded-3xl p-8 box-glow-hover transition-all text-center relative overflow-hidden group reveal">
+                    <div class="w-14 h-14 bg-brand-red/10 rounded-2xl flex items-center justify-center text-brand-red text-2xl mx-auto mb-5">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Lunes a Viernes</h3>
+                    <p class="text-4xl font-black text-brand-red font-display my-2">6:00 a.m. - 10:30 p.m.</p>
+                    <span class="inline-block mt-3 px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold">
+                        <i class="fa-solid fa-clock mr-1"></i> Jornada Continua (16.5 hrs)
+                    </span>
+                </div>
+
+                <!-- Sábados -->
+                <div class="bg-brand-cardBg border border-brand-cardBorder rounded-3xl p-8 box-glow-hover transition-all text-center relative overflow-hidden group reveal">
+                    <div class="w-14 h-14 bg-brand-red/10 rounded-2xl flex items-center justify-center text-brand-red text-2xl mx-auto mb-5">
+                        <i class="fa-solid fa-dumbbell"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Sábados</h3>
+                    <p class="text-4xl font-black text-brand-red font-display my-2">7:00 a.m. - 6:00 p.m.</p>
+                    <span class="inline-block mt-3 px-3.5 py-1 rounded-full bg-brand-red/10 text-brand-red text-xs font-bold">
+                        <i class="fa-solid fa-sun mr-1"></i> Horario Extendido Sabatino
+                    </span>
+                </div>
+
+                <!-- Domingos -->
+                <div class="bg-brand-cardBg border border-brand-cardBorder rounded-3xl p-8 box-glow-hover transition-all text-center relative overflow-hidden group reveal">
+                    <div class="w-14 h-14 bg-brand-red/10 rounded-2xl flex items-center justify-center text-brand-red text-2xl mx-auto mb-5">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Domingos</h3>
+                    <p class="text-4xl font-black text-brand-red font-display my-2">8:00 a.m. - 4:00 p.m.</p>
+                    <span class="inline-block mt-3 px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-bold">
+                        <i class="fa-solid fa-heart mr-1"></i> Entrenamiento Dominical
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALCULADORA IMC (HERRAMIENTA INTERACTIVA) -->
+    <section id="imc" class="py-20 bg-brand-darkBg border-y border-brand-cardBorder/40 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="bg-brand-cardBg border border-brand-cardBorder p-8 sm:p-10 rounded-3xl box-glow-red reveal">
+                <div class="text-center mb-8">
+                    <span class="text-brand-red font-bold text-xs uppercase tracking-widest">Herramienta Fitness</span>
+                    <h2 class="font-display text-4xl text-white mt-1">Calculadora de Índice de Masa Corporal (IMC)</h2>
+                    <p class="text-gray-400 text-xs sm:text-sm mt-1">Conoce tu estado actual y establece objetivos claros de fuerza o pérdida de grasa.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Peso (kg):</label>
+                            <input type="number" id="imc-weight" placeholder="Ej. 70" class="w-full bg-black/60 border border-brand-cardBorder rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Estatura (cm):</label>
+                            <input type="number" id="imc-height" placeholder="Ej. 175" class="w-full bg-black/60 border border-brand-cardBorder rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-red transition-colors text-sm">
+                        </div>
+                        <button onclick="calculateIMC()" class="w-full bg-red-gradient text-white font-bold py-3.5 rounded-xl hover:brightness-110 transition-all shadow-md shadow-brand-red/30 text-sm uppercase tracking-wider">
+                            <i class="fa-solid fa-calculator mr-2"></i> Calcular mi IMC
+                        </button>
+                    </div>
+
+                    <div id="imc-result-box" class="bg-black/60 border border-brand-cardBorder p-6 rounded-2xl text-center flex flex-col justify-center items-center min-h-[220px]">
+                        <i class="fa-solid fa-heart-pulse text-brand-red text-4xl mb-3"></i>
+                        <p class="text-gray-400 text-sm">Ingresa tus datos a la izquierda para ver el diagnóstico de tu índice corporal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UBICACIÓN (PANEL ELEGANTE SIN MAPA EMBEBIDO) -->
+    <section id="ubicacion" class="py-24 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-brand-cardBg border border-brand-cardBorder rounded-3xl p-8 sm:p-12 box-glow-red reveal text-center">
+                
+                <div class="w-16 h-16 bg-brand-red/10 border border-brand-red/30 rounded-2xl flex items-center justify-center text-brand-red text-3xl mx-auto mb-6">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <span class="text-brand-red font-bold text-xs uppercase tracking-widest">Localización Exacta</span>
+                <h2 class="font-display text-4xl sm:text-6xl text-white mt-1 mb-4">Nuestra Ubicación</h2>
+                
+                <p class="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                    Avenida, P.º Cristóbal Colón 613, Moderna de la Cruz, 50180 Toluca de Lerdo, Méx.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10 text-left">
+                    <div class="bg-black/50 border border-brand-cardBorder p-5 rounded-2xl flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-red/10 rounded-xl flex items-center justify-center text-brand-red shrink-0">
+                            <i class="fa-solid fa-phone text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400 uppercase font-bold block">Teléfono / WhatsApp</span>
+                            <span class="text-white font-bold text-sm">+52 (722) 555-0199</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/50 border border-brand-cardBorder p-5 rounded-2xl flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-red/10 rounded-xl flex items-center justify-center text-brand-red shrink-0">
+                            <i class="fa-solid fa-clock text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400 uppercase font-bold block">Horario Principal</span>
+                            <span class="text-white font-bold text-sm">Lun - Vie: 6:00 AM - 10:30 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón directo a Google Maps con enlace API de búsqueda exacto -->
+                <a href="https://www.google.com/maps/search/?api=1&query=Avenida+Paseo+Cristobal+Colon+613+Moderna+de+la+Cruz+50180+Toluca+de+Lerdo+Mex" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center gap-3 bg-red-gradient text-white font-extrabold text-base px-8 py-4 rounded-xl hover:brightness-110 transition-all shadow-lg shadow-brand-red/30 hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-map-location-dot text-xl"></i> Abrir en Google Maps
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO Y FORMULARIO DE REGISTRO -->
+    <section id="contacto" class="py-24 bg-brand-darkBg relative border-t border-brand-cardBorder/40">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="bg-brand-cardBg border border-brand-cardBorder p-8 sm:p-12 rounded-3xl box-glow-red reveal">
+                <div class="text-center mb-10">
+                    <span class="text-brand-red font-bold text-xs uppercase tracking-widest">Inicia Hoy Mismo</span>
+                    <h2 class="font-display text-5xl text-white mt-1">Formulario de Inscripción o Informes</h2>
+                    <p class="text-gray-400 text-sm mt-2">Déjanos tus datos para asegurar tu precio promocional o agendar tu visita de prueba.</p>
+                </div>
+
+                <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-2">Nombre Completo</label>
+                            <input type="text" required placeholder="Ej. Juan Pérez" class="w-full bg-black/60 border border-brand-cardBorder rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-red transition-colors text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-2">Teléfono / WhatsApp</label>
+                            <input type="tel" required placeholder="Ej. 722 123 4567" class="w-full bg-black/60 border border-brand-cardBorder rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-red transition-colors text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-2">Membresía de Interés</label>
+                        <select class="w-full bg-black/60 border border-brand-cardBorder rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-red transition-colors text-sm">
+                            <option value="anual">Inscripción Anual ($2,800 MXN) - Máximo Ahorro</option>
+                            <option value="mensual">Plan Mensual ($300 MXN)</option>
+                            <option value="visita">Visita del Día ($50 MXN)</option>
+                            <option value="dudas">Consulta General de Horarios e Instalaciones</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-2">Mensaje o Duda Especial (Opcional)</label>
+                        <textarea rows="4" placeholder="¿Tienes alguna duda o meta específica que desees compartirnos?" class="w-full bg-black/60 border border-brand-cardBorder rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand-red transition-colors text-sm resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-red-gradient text-white font-black py-4 rounded-xl hover:brightness-110 transition-all shadow-lg shadow-brand-red/30 text-base uppercase tracking-wider">
+                        Enviar Solicitud
+                    </button>
+                </form>
+
+                <!-- Mensaje de éxito interactivo -->
+                <div id="form-success" class="hidden mt-6 bg-emerald-500/10 border border-emerald-500/40 p-4 rounded-2xl text-center text-emerald-400 text-sm font-bold">
+                    <i class="fa-solid fa-circle-check mr-2"></i> ¡Mensaje recibido exitosamente! Nos pondremos en contacto contigo por WhatsApp a la brevedad.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black border-t border-brand-cardBorder/40 py-12 text-gray-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-red-gradient rounded-xl flex items-center justify-center text-white font-bold">
+                        <i class="fa-solid fa-dumbbell"></i>
+                    </div>
+                    <span class="font-display text-2xl text-white">GYM <span class="text-brand-red">ATHLETIC</span></span>
+                </div>
+
+                <p class="text-xs text-center text-gray-500">
+                    &copy; <span id="year"></span> Gym Athletic Toluca. Todos los derechos reservados.
+                </p>
+
+                <div class="flex space-x-5 text-xl">
+                    <a href="#" class="hover:text-brand-red transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-brand-red transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-brand-red transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LÓGICA E INTERACTIVIDAD -->
+    <script>
+        // Actualizar año del footer automáticamente
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Toggle del Menú Mobile
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Filtrado de Galería
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.gallery-filter-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-brand-red', 'text-white', 'border-brand-red');
+                btn.classList.add('bg-brand-cardBg', 'text-gray-300', 'border-brand-cardBorder');
+            });
+
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.remove('bg-brand-cardBg', 'text-gray-300', 'border-brand-cardBorder');
+                event.currentTarget.classList.add('bg-brand-red', 'text-white', 'border-brand-red');
+            }
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Calculadora de Meses e Inversión
+        const monthsSlider = document.getElementById('months-slider');
+        const monthsLabel = document.getElementById('months-label');
+        const totalPrice = document.getElementById('total-price');
+        const dailyPrice = document.getElementById('daily-price');
+
+        if (monthsSlider) {
+            monthsSlider.addEventListener('input', (e) => {
+                const months = parseInt(e.target.value);
+                monthsLabel.textContent = `${months} ${months === 1 ? 'Mes' : 'Meses'}`;
+                
+                let total = months * 300;
+                if (months === 12) {
+                    total = 2800;
+                }
+
+                const daily = Math.round(total / (months * 30));
+
+                totalPrice.textContent = `$${total.toLocaleString()} MXN`;
+                dailyPrice.textContent = `$${daily} MXN/día`;
+            });
+        }
+
+        // Calculadora de IMC (Índice de Masa Corporal)
+        function calculateIMC() {
+            const weight = parseFloat(document.getElementById('imc-weight').value);
+            const heightCm = parseFloat(document.getElementById('imc-height').value);
+            const resultBox = document.getElementById('imc-result-box');
+
+            if (!weight || !heightCm || weight <= 0 || heightCm <= 0) {
+                resultBox.innerHTML = `
+                    <p class="text-amber-400 font-bold text-sm">
+                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> Por favor ingresa valores válidos de peso y estatura.
+                    </p>
+                `;
+                return;
+            }
+
+            const heightM = heightCm / 100;
+            const imc = (weight / (heightM * heightM)).toFixed(1);
+            let category = '';
+            let colorClass = '';
+
+            if (imc < 18.5) {
+                category = 'Bajo Peso';
+                colorClass = 'text-amber-400';
+            } else if (imc >= 18.5 && imc < 25) {
+                category = 'Peso Normal / Saludable';
+                colorClass = 'text-emerald-400';
+            } else if (imc >= 25 && imc < 30) {
+                category = 'Sobrepeso';
+                colorClass = 'text-amber-400';
+            } else {
+                category = 'Obesidad';
+                colorClass = 'text-brand-red';
+            }
+
+            resultBox.innerHTML = `
+                <span class="text-xs text-gray-400 uppercase font-bold tracking-wider">Tu IMC Calculado es</span>
+                <p class="text-5xl font-black font-display ${colorClass} my-1">${imc}</p>
+                <p class="text-sm font-bold text-white mb-2">${category}</p>
+                <p class="text-xs text-gray-400 max-w-xs">En Gym Athletic contamos con rutinas adaptadas para ayudarte a alcanzar tu peso ideal.</p>
+            `;
+        }
+
+        // Scroll Reveal Handler
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+
+            reveals.forEach(reveal => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Envío interactivo de formulario
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const successMsg = document.getElementById('form-success');
+            const form = document.getElementById('contact-form');
+
+            successMsg.classList.remove('hidden');
+            form.reset();
+
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 6000);
+        }
+    </script>
+</body>
+</html>
